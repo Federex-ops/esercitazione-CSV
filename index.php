@@ -8,36 +8,30 @@
     // Non mi serve avere un ramo else perchè in caso di errore
     // Lo script viene interrotto a riga 4
 
-    // Apertura della struttura della tabella HTML
-    echo "<table border='1' cell-spacing='0' cell-padding='5'>";
+    // Apertura della tabella HTML
+    echo "<table border='1'>";
 
     // Se il file esiste e viene aperto correttamente:
     while(!feof($file)){ // feof($file) === false
         $row = fgets($file);
 
-        // Ignora eventuali righe vuote alla fine del file
-        if (trim($row) === '') {
-            continue;
-        }
-
-        // Divido la riga in un array usando la virgola come separatore
+        // devo usare explode con "," come separatore
+        // e $row come stringa da separare
+        // avrò in output un array di stringhe da visualizzare
+        // nella <tr></tr>. Ciascun elemento di questo array
+        // dev'essere in una cella <td></td>
         $data = explode(",", $row);
 
-        // Apro la riga della tabella
+        // Genero la riga accedendo agli elementi dell'array per indice
         echo "<tr>";
-
-        // Ciclo su ciascun elemento dell'array per creare le celle <td>
-        foreach ($data as $cell) {
-            // htmlspecialchars evita problemi con caratteri speciali o tag script
-            echo "<td>" . htmlspecialchars(trim($cell)) . "</td>";
-        }
-
-        // Chiudo la riga della tabella
+        echo "<td>" . $data[0] . "</td>";
+        echo "<td>" . $data[1] . "</td>";
+        echo "<td>" . $data[2] . "</td>";
         echo "</tr>";
         // Questo ciclo viene eseguito finchè il file ha dei contenuti da leggere
     }
 
-    // Chiudo la tabella HTML
+    // Chiusura della tabella HTML
     echo "</table>";
 
     fclose($file);
